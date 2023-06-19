@@ -6,14 +6,15 @@ class User extends Model{
 User.init({
     id:{
         type:DataTypes.UUID,
-        defaultValue:DataTypes.UUIDV4
+        defaultValue:DataTypes.UUIDV4,
+        primaryKey:true
     },
     name:{
         type:DataTypes.STRING,
         allowNull:false
     },
     email:{
-        type:DataTypes.email,
+        type:DataTypes.STRING,
     },
     password:{
         type:DataTypes.STRING,
