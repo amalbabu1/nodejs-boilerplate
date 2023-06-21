@@ -1,7 +1,22 @@
 const express = require('express')
-const router = express.Router();
 const userRoutes = require('./user.routes')
+const authRoute = require('./auth.route')
 
-router.use('/user',userRoutes)
+const router = express.Router();
+
+const defaultRoutes =[
+    {
+        path:'/auth',
+        route: authRoute
+    },
+    {
+        path:'/user',
+        route:userRoutes
+    }
+]
+
+defaultRoutes.forEach((route)=>{
+    router.use(route.path,route.route)
+})
 
 module.exports = router

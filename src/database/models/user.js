@@ -15,6 +15,10 @@ User.init({
     },
     email:{
         type:DataTypes.STRING,
+        validate:{
+            isEmail:true
+        },
+        unique:true
     },
     password:{
         type:DataTypes.STRING,
