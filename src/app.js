@@ -6,6 +6,7 @@ const cors = require('cors');
 const passport = require('passport');
 const config = require('./config/config');
 const { jwtStrategy } = require('./config/passport');
+const routes = require('./routes/v1')
 
 const app = express();
 
@@ -32,5 +33,6 @@ app.options('*', cors());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 
+app.use(routes)
 
 module.exports = app;
