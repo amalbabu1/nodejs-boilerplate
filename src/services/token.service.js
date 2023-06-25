@@ -22,6 +22,8 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
         exp: expires.unix(),
         type,
     }
+
+    console.log(payload , "payload");
     return jwt.sign(payload,secret)
 }
 
@@ -51,9 +53,10 @@ const saveToken = async (token, userId, expires, type,blacklisted=false )=>{
  * @returns {Object} {ACCESS REFRESH TOKENS}
  */
 const generateAuthTokens = async (user)=>{
-    const accesTokenExpires = moment().add(config.jwt.accesTokenExpires,'minutes')
+    const accesTokenExpires = moment().add(config.jwt.accessExpirationMinutes,'minutes')
     console.log("accesstoken expires:",accesTokenExpires, " ", accesTokenExpires.toDate())
     const accessToken = generateToken(user.id,accesTokenExpires,tokenTypes.ACCESS)
+    
     const refreshTokenExpires = moment().add(config.jwt.refreshTokenExpires,'days')
     const refreshToken = generateToken(user.id,refreshTokenExpires,tokenTypes.REFRESH)
     //store refresh token in database
