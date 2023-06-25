@@ -11,16 +11,21 @@ const jwtOptions = {
 
 const jwtVerify = async (payload, done) => {
   try {
-    if (payload.type !== tokenTypes.ACCESS) {
-      throw new Error('Invalid token type');
+    console.log("inside verify",payload)
+    if (payload.type !==tokenTypes.ACCESS){
+      throw new Error('Used wrongtoken type')
     }
-    const user = await User.findOne(payload.sub);
+    const user =await User.findOne({
+      attributes:['id','name','email','role'],
+      where:{id:payload.sub}
+    }
+    )
     if (!user) {
       return done(null, false);
     }
-    done(null, user);
+    return done(null, user.dataValues);
   } catch (error) {
-    done(error, false);
+    return done(error, false);
   }
 };
 
